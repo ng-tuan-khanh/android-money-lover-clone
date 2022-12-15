@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="addTransactionViewModel"
+            type="com.narzarech.android.moneyloverclone.addtransaction.AddTransactionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/enter_amount_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:onClick="@{() -> addTransactionViewModel.onEnterAmountClicked()}"
+            android:text="@string/text_enter_amount"
+            app:layout_constraintBottom_toTopOf="@+id/select_category_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_category_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:onClick="@{() -> addTransactionViewModel.onSelectCategoryClicked()}"
+            android:text="@string/text_select_category"
+            app:layout_constraintBottom_toTopOf="@+id/write_note_button"
+            app:layout_constraintTop_toBottomOf="@+id/enter_amount_button" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/write_note_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:onClick="@{() -> addTransactionViewModel.onEnterNoteClicked()}"
+            android:text="@string/text_write_note"
+            app:layout_constraintBottom_toTopOf="@+id/enter_date_button"
+            app:layout_constraintTop_toBottomOf="@+id/select_category_button" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/enter_date_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:onClick="@{() -> addTransactionViewModel.onEnterDateClicked()}"
+            android:text="@string/text_enter_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_note_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
