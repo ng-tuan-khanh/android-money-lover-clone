@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [CategoryInfo::class], version = 1, exportSchema = false)
+@Database(entities = [CategoryInfo::class], version = 1, exportSchema = true)
 abstract class CategoryDatabase : RoomDatabase() {
     abstract val categoryDao: CategoryDao
 
@@ -24,6 +24,7 @@ abstract class CategoryDatabase : RoomDatabase() {
                         CategoryDatabase::class.java,
                         "category_database"
                     )
+                        //.createFromAsset("database/category_database.db")
                         .fallbackToDestructiveMigration()
                         .build()
 

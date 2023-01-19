@@ -98,11 +98,11 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
         _shouldRemoveLatestTransaction = false
     }
 
-    class Factory(val database: TransactionDao) : ViewModelProvider.Factory {
+    class Factory(val transactionDao: TransactionDao) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
-                return TransactionViewModel(database) as T
+                return TransactionViewModel(transactionDao) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

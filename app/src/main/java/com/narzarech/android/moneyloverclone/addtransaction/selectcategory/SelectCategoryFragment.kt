@@ -40,7 +40,7 @@ class SelectCategoryFragment : Fragment() {
         val categoryDao = CategoryDatabase.getInstance(application).categoryDao
 
         // Set up the view models
-        val selectCategoryViewModelFactory = SelectCategoryViewModel.Factory()
+        val selectCategoryViewModelFactory = SelectCategoryViewModel.Factory(categoryDao)
         selectCategoryViewModel =
             ViewModelProvider(
                 this,
@@ -69,16 +69,16 @@ class SelectCategoryFragment : Fragment() {
         binding.categoryList.layoutManager = manager
         binding.categoryList.adapter = adapter
 
-//        enterDateViewModel.daysOfMonth.observe(viewLifecycleOwner, Observer {
-//            adapter.submitList(it)
-//        })
+        selectCategoryViewModel.listCategories.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
 
         // Navigation observers
         selectCategoryViewModel.navigateToAddTransaction.observe(
             viewLifecycleOwner,
             Observer { shouldNavigate ->
                 if (shouldNavigate) {
-                    //transactionViewModel.onNavigatedToAddTransaction(enterDateViewModel.selectedDate)
+//                    transactionViewModel.onNavigatedToAddTransaction(enterDateViewModel.selectedDate)
                     this.findNavController()
                         .navigate(SelectCategoryFragmentDirections.actionSelectCategoryFragmentToAddTransactionFragment())
                     selectCategoryViewModel.onNavigatedToAddTransaction()

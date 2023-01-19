@@ -23,6 +23,6 @@ interface CategoryDao {
     @Query("SELECT * FROM category_info_table ORDER BY id DESC")
     fun getListCategories(): LiveData<List<CategoryInfo>>
 
-    @Query("DELETE FROM transaction_info_table")
+    @Query("DELETE FROM category_info_table")
     suspend fun clear()
 }
