@@ -16,6 +16,7 @@ import com.narzarech.android.moneyloverclone.R
 import com.narzarech.android.moneyloverclone.addtransaction.TransactionViewModel
 import com.narzarech.android.moneyloverclone.addtransaction.enterdate.CategoryAdapter
 import com.narzarech.android.moneyloverclone.addtransaction.enterdate.CategoryCellListener
+import com.narzarech.android.moneyloverclone.database.CategoryDatabase
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentSelectCategoryBinding
 
@@ -33,9 +34,10 @@ class SelectCategoryFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        // Get the necessary arguments for TransactionAmountViewModel.Factory
+        // Get a DAO for TransactionDatabase and CategoryDatabase
         val application = requireNotNull(this.activity).application
-        val database = TransactionDatabase.getInstance(application).transactionDao
+        val transactionDao = TransactionDatabase.getInstance(application).transactionDao
+        val categoryDao = CategoryDatabase.getInstance(application).categoryDao
 
         // Set up the view models
         val selectCategoryViewModelFactory = SelectCategoryViewModel.Factory()
@@ -45,7 +47,7 @@ class SelectCategoryFragment : Fragment() {
                 selectCategoryViewModelFactory
             ).get(SelectCategoryViewModel::class.java)
 
-        val transactionViewModelFactory = TransactionViewModel.Factory(database)
+        val transactionViewModelFactory = TransactionViewModel.Factory(transactionDao)
         val transactionViewModel =
             ViewModelProvider(requireActivity(), transactionViewModelFactory).get(
                 TransactionViewModel::class.java

@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TransactionViewModel(val database: TransactionDao) : ViewModel() {
+class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
 
     // Properties to hold data
     private val _currentTransaction = MutableLiveData<TransactionInfo?>()
@@ -20,7 +20,7 @@ class TransactionViewModel(val database: TransactionDao) : ViewModel() {
     // Methods to interact with the database
     private suspend fun getLatestTransactionFromDatabase() : TransactionInfo? {
         return withContext(Dispatchers.IO) {
-            database.getLatestTransaction()
+            transactionDao.getLatestTransaction()
         }
     }
 
@@ -28,7 +28,7 @@ class TransactionViewModel(val database: TransactionDao) : ViewModel() {
         viewModelScope.launch {
             val newTransaction = TransactionInfo()
             withContext(Dispatchers.IO) {
-                database.insert(newTransaction)
+                transactionDao.insert(newTransaction)
             }
             _currentTransaction.value = getLatestTransactionFromDatabase()
         }
@@ -38,7 +38,7 @@ class TransactionViewModel(val database: TransactionDao) : ViewModel() {
         _currentTransaction.value?.let {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
-                    database.remove(_currentTransaction.value!!.id)
+                    transactionDao.remove(_currentTransaction.value!!.id)
                 }
                 _currentTransaction.value = getLatestTransactionFromDatabase()
             }
@@ -49,7 +49,7 @@ class TransactionViewModel(val database: TransactionDao) : ViewModel() {
         viewModelScope.launch {
             _currentTransaction.value!!.amount = amount
             withContext(Dispatchers.IO) {
-                database.update(_currentTransaction.value!!)
+                transactionDao.update(_currentTransaction.value!!)
             }
         }
     }
@@ -58,7 +58,7 @@ class TransactionViewModel(val database: TransactionDao) : ViewModel() {
         viewModelScope.launch {
             _currentTransaction.value!!.date = date
             withContext(Dispatchers.IO) {
-                database.update(_currentTransaction.value!!)
+                transactionDao.update(_currentTransaction.value!!)
             }
         }
     }
