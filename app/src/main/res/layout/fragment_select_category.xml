@@ -24,6 +24,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:clickable="true"
+            android:onClick="@{() -> selectCategoryViewModel.onAddCategoryButtonClicked()}"
             android:src="@drawable/ic_baseline_add_24" />
 
     </FrameLayout>

@@ -85,6 +85,16 @@ class SelectCategoryFragment : Fragment() {
                 }
             })
 
+        selectCategoryViewModel.navigateToAddCategory.observe(
+            viewLifecycleOwner,
+            Observer { shouldNavigate ->
+                if (shouldNavigate) {
+                    this.findNavController()
+                        .navigate(SelectCategoryFragmentDirections.actionSelectCategoryFragmentToAddCategoryFragment())
+                    selectCategoryViewModel.onNavigatedToAddCategory()
+                }
+            })
+
         return binding.root
     }
 

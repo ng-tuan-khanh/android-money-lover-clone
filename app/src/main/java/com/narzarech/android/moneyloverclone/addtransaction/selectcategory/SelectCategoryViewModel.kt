@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.narzarech.android.moneyloverclone.database.CategoryDao
+import com.narzarech.android.moneyloverclone.database.CategoryInfo
 import java.time.format.DateTimeFormatter
 
 class SelectCategoryViewModel(val categoryDao: CategoryDao) : ViewModel() {
@@ -18,14 +19,19 @@ class SelectCategoryViewModel(val categoryDao: CategoryDao) : ViewModel() {
         get() = _listCategories
 
     // Database object
-    private var _listCategoriesDB = categoryDao.getListCategories()
+    private lateinit var _listCategoriesDB: LiveData<List<CategoryInfo>>
 
     // Properties to handle navigation
     private val _navigateToAddTransaction = MutableLiveData<Boolean>()
     val navigateToAddTransaction: LiveData<Boolean>
         get() = _navigateToAddTransaction
 
+    private val _navigateToAddCategory = MutableLiveData<Boolean>()
+    val navigateToAddCategory: LiveData<Boolean>
+        get() = _navigateToAddCategory
+
     init {
+        _listCategoriesDB = categoryDao.getListCategories()
         _listCategories.value = _listCategoriesDB.value?.map { it -> it.category }
         //_listCategories.value = listOf("TEST 1", "TEST 2")
     }
@@ -43,6 +49,14 @@ class SelectCategoryViewModel(val categoryDao: CategoryDao) : ViewModel() {
 
     fun onNavigatedToAddTransaction() {
         _navigateToAddTransaction.value = false
+    }
+
+    fun onAddCategoryButtonClicked() {
+        _navigateToAddCategory.value = true
+    }
+
+    fun onNavigatedToAddCategory() {
+        _navigateToAddCategory.value = false
     }
 
 
