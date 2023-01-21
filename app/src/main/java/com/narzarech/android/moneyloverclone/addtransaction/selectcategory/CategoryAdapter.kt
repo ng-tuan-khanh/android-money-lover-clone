@@ -1,14 +1,15 @@
-package com.narzarech.android.moneyloverclone.addtransaction.enterdate
+package com.narzarech.android.moneyloverclone.addtransaction.selectcategory
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.narzarech.android.moneyloverclone.database.CategoryInfo
 import com.narzarech.android.moneyloverclone.databinding.CategoryCellBinding
 
 class CategoryAdapter(private val clickListener: CategoryCellListener) :
-    ListAdapter<String, CategoryAdapter.CategoryViewHolder>(DiffCallback) {
+    ListAdapter<CategoryInfo, CategoryAdapter.CategoryViewHolder>(DiffCallback) {
     class CategoryViewHolder private constructor(val binding: CategoryCellBinding) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -19,19 +20,19 @@ class CategoryAdapter(private val clickListener: CategoryCellListener) :
             }
         }
 
-        fun bind(item: String, clickListener: CategoryCellListener) {
+        fun bind(item: CategoryInfo, clickListener: CategoryCellListener) {
             binding.clickListener = clickListener
-            binding.categoryCell.text = item
+            binding.categoryCell.text = item.category
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+    companion object DiffCallback : DiffUtil.ItemCallback<CategoryInfo>() {
+        override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean {
             return oldItem == newItem
         }
     }

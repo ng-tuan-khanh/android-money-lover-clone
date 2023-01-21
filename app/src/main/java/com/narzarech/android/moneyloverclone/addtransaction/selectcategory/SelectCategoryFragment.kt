@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.narzarech.android.moneyloverclone.MainActivity
 import com.narzarech.android.moneyloverclone.R
 import com.narzarech.android.moneyloverclone.addtransaction.TransactionViewModel
-import com.narzarech.android.moneyloverclone.addtransaction.enterdate.CategoryAdapter
-import com.narzarech.android.moneyloverclone.addtransaction.enterdate.CategoryCellListener
 import com.narzarech.android.moneyloverclone.database.CategoryDatabase
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentSelectCategoryBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SelectCategoryFragment : Fragment() {
     private lateinit var binding: FragmentSelectCategoryBinding
@@ -70,7 +72,13 @@ class SelectCategoryFragment : Fragment() {
         binding.categoryList.adapter = adapter
 
         selectCategoryViewModel.listCategories.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+            it?.let {
+                CoroutineScope(Dispatchers.Default).launch {
+                    withContext(Dispatchers.Main) {
+                        adapter.submitList(it)
+                    }
+                }
+            }
         })
 
         // Navigation observers
