@@ -21,6 +21,7 @@ class CategoryAdapter(private val clickListener: CategoryCellListener) :
         }
 
         fun bind(item: CategoryInfo, clickListener: CategoryCellListener) {
+            binding.category = item
             binding.clickListener = clickListener
             binding.categoryCell.text = item.category
             binding.executePendingBindings()
@@ -47,6 +48,6 @@ class CategoryAdapter(private val clickListener: CategoryCellListener) :
     }
 }
 
-class CategoryCellListener(val clickListener: (String) -> Unit) {
-    fun onClick(message: String) = clickListener(message)
+class CategoryCellListener(val clickListener: (CategoryInfo) -> Unit) {
+    fun onClick(categoryInfo: CategoryInfo) = clickListener(categoryInfo)
 }

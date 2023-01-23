@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="category"
+            type="com.narzarech.android.moneyloverclone.database.CategoryInfo"/>
 
         <variable
             name="clickListener"
@@ -12,7 +15,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(category)}">
 
         <TextView
             android:id="@+id/category_cell"

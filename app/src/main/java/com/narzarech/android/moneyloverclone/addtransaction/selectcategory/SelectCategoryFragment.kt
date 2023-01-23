@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -60,12 +61,12 @@ class SelectCategoryFragment : Fragment() {
 
         // Set up the category list recycler view
         val manager = LinearLayoutManager(requireContext())
-        val adapter = CategoryAdapter(CategoryCellListener { categoryText ->
-//            if (categoryText != "") {
-//                enterDateViewModel.updateSelectedDate(dayText)
-//                Toast.makeText(context, enterDateViewModel.selectedDate, Toast.LENGTH_SHORT)
-//                    .show()
-//            }
+        val adapter = CategoryAdapter(CategoryCellListener { category ->
+            // Click listener for item in the recycler view
+
+            // Pass the category info for the current transaction
+            transactionViewModel.onCategorySubmitted(category)
+            Toast.makeText(context, category.category, Toast.LENGTH_SHORT).show()
         })
 
         binding.categoryList.layoutManager = manager

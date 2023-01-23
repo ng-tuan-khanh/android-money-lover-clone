@@ -1,6 +1,7 @@
 package com.narzarech.android.moneyloverclone.addtransaction
 
 import androidx.lifecycle.*
+import com.narzarech.android.moneyloverclone.database.CategoryInfo
 import com.narzarech.android.moneyloverclone.database.TransactionDao
 import com.narzarech.android.moneyloverclone.database.TransactionInfo
 import kotlinx.coroutines.Dispatchers
@@ -96,6 +97,10 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
     fun onSaveButtonClicked() {
         _shouldInsertNewTransaction = true
         _shouldRemoveLatestTransaction = false
+    }
+
+    fun onCategorySubmitted(category: CategoryInfo) {
+
     }
 
     class Factory(val transactionDao: TransactionDao) : ViewModelProvider.Factory {
