@@ -15,23 +15,34 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/transaction_amount"
+            android:id="@+id/transaction_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_normal"
+            android:layout_margin="8dp"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            tools:text="Beverages" />
+
+        <TextView
+            android:id="@+id/transaction_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_date"
+            app:layout_constraintEnd_toEndOf="@+id/transaction_category"
+            app:layout_constraintStart_toStartOf="@+id/transaction_category"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_category"
             tools:text="₫100,000" />
 
         <TextView
             android:id="@+id/transaction_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_normal"
+            android:layout_margin="8dp"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/transaction_amount"

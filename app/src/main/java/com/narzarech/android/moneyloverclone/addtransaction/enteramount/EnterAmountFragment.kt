@@ -61,7 +61,7 @@ class EnterAmountFragment : Fragment() {
             Observer { shouldNavigate ->
                 if (shouldNavigate) {
                     val amount = binding.amountText.text.toString().toDouble()
-                    transactionViewModel.onNavigatedToAddTransaction(amount)
+                    transactionViewModel.onAmountSubmitted(amount)
                     this.findNavController()
                         .navigate(EnterAmountFragmentDirections.actionEnterAmountFragmentToAddTransactionFragment())
                     enterAmountViewModel.onNavigatedToAddTransaction()
@@ -87,7 +87,6 @@ class EnterAmountFragment : Fragment() {
             }
             R.id.action_save -> {
                 enterAmountViewModel.onSaveButtonClicked()
-                enterAmountViewModel.onNavigatedToAddTransaction()
                 true
             }
             else -> super.onOptionsItemSelected(item)

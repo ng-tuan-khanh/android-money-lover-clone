@@ -72,7 +72,7 @@ class EnterDateFragment : Fragment() {
             viewLifecycleOwner,
             Observer { shouldNavigate ->
                 if (shouldNavigate) {
-                    transactionViewModel.onNavigatedToAddTransaction(enterDateViewModel.selectedDate)
+                    transactionViewModel.onDateSubmitted(enterDateViewModel.selectedDate)
                     this.findNavController()
                         .navigate(EnterDateFragmentDirections.actionEnterDateFragmentToAddTransactionFragment())
                     enterDateViewModel.onNavigatedToAddTransaction()

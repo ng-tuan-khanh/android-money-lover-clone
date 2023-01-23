@@ -1,4 +1,4 @@
-package com.narzarech.android.moneyloverclone.addtransaction
+package com.narzarech.android.moneyloverclone.addtransaction.enternote
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

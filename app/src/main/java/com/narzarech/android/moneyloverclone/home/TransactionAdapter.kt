@@ -6,21 +6,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.narzarech.android.moneyloverclone.database.TransactionInfo
-import com.narzarech.android.moneyloverclone.databinding.ListItemTransactionBinding
+import com.narzarech.android.moneyloverclone.databinding.TransactionCellBinding
 
 class TransactionAdapter() :
     ListAdapter<TransactionInfo, TransactionAdapter.TransactionViewHolder>(DiffCallBack) {
-    class TransactionViewHolder private constructor(val binding: ListItemTransactionBinding) :
+    class TransactionViewHolder private constructor(val binding: TransactionCellBinding) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun from(parent: ViewGroup): TransactionViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ListItemTransactionBinding.inflate(layoutInflater, parent, false)
+                val binding = TransactionCellBinding.inflate(layoutInflater, parent, false)
                 return TransactionViewHolder(binding)
             }
         }
 
         fun bind(item: TransactionInfo) {
+            binding.transactionCategory.text = item.category
             binding.transactionAmount.text = "₫" + item.amount.toString()
             binding.transactionDate.text = item.date
             binding.transaction = item

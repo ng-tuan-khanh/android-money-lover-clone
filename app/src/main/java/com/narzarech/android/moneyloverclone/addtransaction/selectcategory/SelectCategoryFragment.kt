@@ -65,7 +65,7 @@ class SelectCategoryFragment : Fragment() {
             // Click listener for item in the recycler view
 
             // Pass the category info for the current transaction
-            transactionViewModel.onCategorySubmitted(category)
+            transactionViewModel.onCategorySubmitted(category.category)
             Toast.makeText(context, category.category, Toast.LENGTH_SHORT).show()
         })
 

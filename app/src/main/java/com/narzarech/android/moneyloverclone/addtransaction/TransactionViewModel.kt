@@ -10,97 +10,39 @@ import kotlinx.coroutines.withContext
 
 class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
 
-    // Properties to hold data
-    private val _currentTransaction = MutableLiveData<TransactionInfo?>()
-    val currentTransaction: LiveData<TransactionInfo?>
-        get() = _currentTransaction
-
-    private var _shouldInsertNewTransaction = true
-    private var _shouldRemoveLatestTransaction = false
-
-    // Methods to interact with the database
-    private suspend fun getLatestTransactionFromDatabase() : TransactionInfo? {
-        return withContext(Dispatchers.IO) {
-            transactionDao.getLatestTransaction()
-        }
-    }
+    private val _currentAmount = MutableLiveData<Double>()
+    private val _currentCategory = MutableLiveData<String>()
+    private val _currentDate = MutableLiveData<String>()
 
     private fun insertNewTransactionToDatabase() {
+        val newTransaction = TransactionInfo(
+            amount = _currentAmount.value!!,
+            category = _currentCategory.value!!,
+            date = _currentDate.value!!
+        )
         viewModelScope.launch {
-            val newTransaction = TransactionInfo()
             withContext(Dispatchers.IO) {
                 transactionDao.insert(newTransaction)
             }
-            _currentTransaction.value = getLatestTransactionFromDatabase()
         }
     }
 
-    private fun removeLatestTransactionFromDatabase() {
-        _currentTransaction.value?.let {
-            viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    transactionDao.remove(_currentTransaction.value!!.id)
-                }
-                _currentTransaction.value = getLatestTransactionFromDatabase()
-            }
-        }
+    fun onAmountSubmitted(amount: Double) {
+        _currentAmount.value = amount
     }
 
-    private fun updateTransactionToDatabase(amount: Double) {
-        viewModelScope.launch {
-            _currentTransaction.value!!.amount = amount
-            withContext(Dispatchers.IO) {
-                transactionDao.update(_currentTransaction.value!!)
-            }
-        }
+    fun onCategorySubmitted(category: String) {
+        _currentCategory.value = category
     }
 
-    private fun updateTransactionToDatabase(date: String) {
-        viewModelScope.launch {
-            _currentTransaction.value!!.date = date
-            withContext(Dispatchers.IO) {
-                transactionDao.update(_currentTransaction.value!!)
-            }
-        }
-    }
-
-    // Methods to handle the navigation
-    // Navigating to enter information of the new transaction
-    fun onNavigatedToEnterInfo() {
-        if (_shouldInsertNewTransaction) {
-            insertNewTransactionToDatabase()
-            _shouldInsertNewTransaction = false
-        }
-        _shouldRemoveLatestTransaction = true
-    }
-
-    fun onNavigatedToAddTransaction(amount: Double) {
-        updateTransactionToDatabase(amount)
-    }
-
-    // Navigating back to AddTransaction after entering info
-    fun onNavigatedToAddTransaction(date: String) {
-        if (date != "") {
-            updateTransactionToDatabase(date)
-        }
-    }
-
-    // Navigating back to Home
-    fun onBackButtonClicked() {
-        _shouldInsertNewTransaction = true
-        if (_shouldRemoveLatestTransaction) {
-            removeLatestTransactionFromDatabase()
-            _shouldRemoveLatestTransaction = false
-        }
+    fun onDateSubmitted(date: String) {
+        _currentDate.value = date
     }
 
     fun onSaveButtonClicked() {
-        _shouldInsertNewTransaction = true
-        _shouldRemoveLatestTransaction = false
-    }
-
-    fun onCategorySubmitted(category: CategoryInfo) {
-
+        if (_currentAmount.value != null && _currentCategory.value != null && _currentDate.value != null) {
+            insertNewTransactionToDatabase()
+        }
     }
 
     class Factory(val transactionDao: TransactionDao) : ViewModelProvider.Factory {

@@ -9,8 +9,9 @@ import java.time.format.DateTimeFormatter
 data class TransactionInfo(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
-    //var type: String,
     var amount: Double = 0.0,
+    // TODO: Temporary approach, research Parcelable
+    var category: String,
     // Default value is the current date string
     var date: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
 )

@@ -35,8 +35,6 @@ class AddTransactionFragment : Fragment() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 navController.navigateUp()
-
-                transactionViewModel.onBackButtonClicked()
             }
         }
 
@@ -81,7 +79,6 @@ class AddTransactionFragment : Fragment() {
             viewLifecycleOwner,
             Observer { shouldNavigate ->
                 if (shouldNavigate) {
-                    transactionViewModel.onNavigatedToEnterInfo()
                     this.findNavController()
                         .navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToEnterAmountFragment())
                     addTransactionViewModel.onNavigatedToEnterAmount()
@@ -112,7 +109,6 @@ class AddTransactionFragment : Fragment() {
             viewLifecycleOwner,
             Observer { shouldNavigate ->
                 if (shouldNavigate) {
-                    transactionViewModel.onNavigatedToEnterInfo()
                     this.findNavController()
                         .navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToEnterDateFragment())
                     addTransactionViewModel.onNavigatedToEnterDate()
@@ -149,7 +145,6 @@ class AddTransactionFragment : Fragment() {
             }
             R.id.action_save -> {
                 addTransactionViewModel.onSaveButtonClicked()
-                addTransactionViewModel.onNavigatedToHome()
                 transactionViewModel.onSaveButtonClicked()
                 true
             }
