@@ -23,6 +23,7 @@ class TransactionAdapter() :
         fun bind(item: TransactionInfo) {
             binding.transactionCategory.text = item.category
             binding.transactionAmount.text = "₫" + item.amount.toString()
+            binding.transactionNote.text = item.note
             binding.transactionDate.text = item.date
             binding.transaction = item
             binding.executePendingBindings()

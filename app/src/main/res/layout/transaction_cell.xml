@@ -32,11 +32,23 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/transaction_date"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_note"
             app:layout_constraintEnd_toEndOf="@+id/transaction_category"
             app:layout_constraintStart_toStartOf="@+id/transaction_category"
             app:layout_constraintTop_toBottomOf="@+id/transaction_category"
             tools:text="₫100,000" />
+
+        <TextView
+            android:id="@+id/transaction_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_date"
+            app:layout_constraintEnd_toEndOf="@+id/transaction_amount"
+            app:layout_constraintStart_toStartOf="@+id/transaction_amount"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_amount"
+            tools:text="Good purchase" />
 
         <TextView
             android:id="@+id/transaction_date"
@@ -45,9 +57,9 @@
             android:layout_margin="8dp"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/transaction_amount"
-            app:layout_constraintStart_toStartOf="@+id/transaction_amount"
-            app:layout_constraintTop_toBottomOf="@+id/transaction_amount"
+            app:layout_constraintEnd_toEndOf="@+id/transaction_note"
+            app:layout_constraintStart_toStartOf="@+id/transaction_note"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_note"
             tools:text="13 December 2022" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

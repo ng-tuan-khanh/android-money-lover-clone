@@ -58,9 +58,14 @@
     </fragment>
     <fragment
         android:id="@+id/enterNoteFragment"
-        android:name="com.narzarech.android.moneyloverclone.addtransaction.EnterNoteFragment"
-        android:label="fragment_enter_note"
-        tools:layout="@layout/fragment_enter_note" />
+        android:name="com.narzarech.android.moneyloverclone.addtransaction.enternote.EnterNoteFragment"
+        android:label="fragment_enter_note">
+        <action
+            android:id="@+id/action_enterNoteFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment"
+            app:popUpTo="@id/addTransactionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/enterDateFragment"
         android:name="com.narzarech.android.moneyloverclone.addtransaction.enterdate.EnterDateFragment"

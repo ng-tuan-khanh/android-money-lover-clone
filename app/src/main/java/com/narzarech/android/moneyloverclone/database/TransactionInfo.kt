@@ -12,6 +12,7 @@ data class TransactionInfo(
     var amount: Double = 0.0,
     // TODO: Temporary approach, research Parcelable
     var category: String,
+    var note: String,
     // Default value is the current date string
     var date: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
 )

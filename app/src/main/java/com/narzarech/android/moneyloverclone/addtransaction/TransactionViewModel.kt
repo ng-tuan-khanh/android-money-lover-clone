@@ -12,12 +12,14 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
 
     private val _currentAmount = MutableLiveData<Double>()
     private val _currentCategory = MutableLiveData<String>()
+    private val _currentNote = MutableLiveData<String>()
     private val _currentDate = MutableLiveData<String>()
 
     private fun insertNewTransactionToDatabase() {
         val newTransaction = TransactionInfo(
             amount = _currentAmount.value!!,
             category = _currentCategory.value!!,
+            note = _currentNote.value!!,
             date = _currentDate.value!!
         )
         viewModelScope.launch {
@@ -35,12 +37,16 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
         _currentCategory.value = category
     }
 
+    fun onNoteSubmitted(note: String) {
+        _currentNote.value = note
+    }
+
     fun onDateSubmitted(date: String) {
         _currentDate.value = date
     }
 
     fun onSaveButtonClicked() {
-        if (_currentAmount.value != null && _currentCategory.value != null && _currentDate.value != null) {
+        if (_currentAmount.value != null && _currentCategory.value != null && _currentNote.value != null && _currentDate.value != null) {
             insertNewTransactionToDatabase()
         }
     }
