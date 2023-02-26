@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.narzarech.android.moneyloverclone.MainActivity
 import com.narzarech.android.moneyloverclone.R
 import com.narzarech.android.moneyloverclone.addtransaction.TransactionViewModel
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentEnterDateBinding
+import com.narzarech.android.moneyloverclone.home.HomeActivity
 
 class EnterDateFragment : Fragment() {
     private lateinit var binding: FragmentEnterDateBinding
@@ -85,12 +85,12 @@ class EnterDateFragment : Fragment() {
     override fun onResume() {
         super.onResume();
 
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         activity.showActionBar()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         return when (item.itemId) {
             android.R.id.home -> {
                 activity.onBackPressed()

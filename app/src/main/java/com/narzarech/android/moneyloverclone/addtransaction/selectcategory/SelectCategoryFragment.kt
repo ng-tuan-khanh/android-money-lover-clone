@@ -18,6 +18,7 @@ import com.narzarech.android.moneyloverclone.addtransaction.TransactionViewModel
 import com.narzarech.android.moneyloverclone.database.CategoryDatabase
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentSelectCategoryBinding
+import com.narzarech.android.moneyloverclone.home.HomeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -110,12 +111,12 @@ class SelectCategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume();
 
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         activity.showActionBar()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         return when (item.itemId) {
             android.R.id.home -> {
                 activity.onBackPressed()

@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.narzarech.android.moneyloverclone.MainActivity
 import com.narzarech.android.moneyloverclone.R
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentHomeBinding
@@ -32,7 +30,8 @@ class HomeFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = TransactionDatabase.getInstance(application).transactionDao
         val homeViewModelFactory = HomeViewModel.Factory(database)
-        val homeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
+        val homeViewModel =
+            ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
         // Data binding
         binding.lifecycleOwner = this
@@ -58,7 +57,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume();
 
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         activity.hideActionBar()
     }
 }

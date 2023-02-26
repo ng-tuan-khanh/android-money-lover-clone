@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639240203173",
+    "project_id": "money-lover-clone-1d481",
+    "storage_bucket": "money-lover-clone-1d481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639240203173:android:00d3d838e9fe24b028564c",
+        "android_client_info": {
+          "package_name": "com.narzarech.android.moneyloverclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639240203173-i0ru0opanjdhvikoj68rtm6vtnrgbdiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoR51CAwWKcitiMMG74n6aZtz7_X7S3dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639240203173-i0ru0opanjdhvikoj68rtm6vtnrgbdiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

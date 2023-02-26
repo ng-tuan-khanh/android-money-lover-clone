@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.narzarech.android.moneyloverclone.MainActivity
+import com.narzarech.android.moneyloverclone.home.HomeActivity
 import com.narzarech.android.moneyloverclone.R
 import com.narzarech.android.moneyloverclone.database.TransactionDatabase
 import com.narzarech.android.moneyloverclone.databinding.FragmentAddTransactionBinding
@@ -131,7 +131,7 @@ class AddTransactionFragment : Fragment() {
     override fun onResume() {
         super.onResume();
 
-        val activity = this.requireActivity() as MainActivity
+        val activity = this.requireActivity() as HomeActivity
         activity.showActionBar()
     }
 
