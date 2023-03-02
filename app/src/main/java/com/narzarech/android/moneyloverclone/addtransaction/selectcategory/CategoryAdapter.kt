@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.narzarech.android.moneyloverclone.database.Category
 import com.narzarech.android.moneyloverclone.database.CategoryInfo
 import com.narzarech.android.moneyloverclone.databinding.CategoryCellBinding
 
 class CategoryAdapter(private val clickListener: CategoryCellListener) :
-    ListAdapter<CategoryInfo, CategoryAdapter.CategoryViewHolder>(DiffCallback) {
+    ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(DiffCallback) {
     class CategoryViewHolder private constructor(val binding: CategoryCellBinding) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -20,20 +21,20 @@ class CategoryAdapter(private val clickListener: CategoryCellListener) :
             }
         }
 
-        fun bind(item: CategoryInfo, clickListener: CategoryCellListener) {
+        fun bind(item: Category, clickListener: CategoryCellListener) {
             binding.category = item
             binding.clickListener = clickListener
-            binding.categoryCell.text = item.category
+            binding.categoryCell.text = item.name
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<CategoryInfo>() {
-        override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean {
-            return oldItem.id == newItem.id
+    companion object DiffCallback : DiffUtil.ItemCallback<Category>() {
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean {
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem == newItem
         }
     }
@@ -48,6 +49,6 @@ class CategoryAdapter(private val clickListener: CategoryCellListener) :
     }
 }
 
-class CategoryCellListener(val clickListener: (CategoryInfo) -> Unit) {
-    fun onClick(categoryInfo: CategoryInfo) = clickListener(categoryInfo)
+class CategoryCellListener(val clickListener: (Category) -> Unit) {
+    fun onClick(category: Category) = clickListener(category)
 }

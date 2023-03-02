@@ -2,48 +2,71 @@ package com.narzarech.android.moneyloverclone.database
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 data class Category(
-    var id: Long? = null,
     var name: String? = null
 )
 
+@IgnoreExtraProperties
 data class Transaction(
-    var id: Long? = null,
     var amount: Double? = null,
-    var category: Category? = null,
+    //var category: Category? = null,
     var note: String? = null,
     var date: String? = null
 )
 
 class FirebaseDatabase {
     companion object {
-        private val dbReference =
-            Firebase.database("https://money-lover-clone-1d481-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+        private lateinit var dbReference: DatabaseReference
+
+        init {
+            val database =
+                Firebase.database("https://money-lover-clone-1d481-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            database.setPersistenceEnabled(true)
+            dbReference = database.reference
+        }
 
         fun writeTransaction(
-            id: Long,
             amount: Double,
-            category: Category,
             note: String,
             date: String
         ) {
-            val newTransaction = Transaction(id, amount, category, note, date)
-            dbReference.child("transactions").child(id.toString()).setValue(newTransaction)
+            val newTransaction = Transaction(amount, note, date)
+            val key = dbReference.child("transactions").push().key
+            if (key == null) {
+                Log.w(
+                    "Firebase Realtime Database::",
+                    "Could not get push key for new transactions"
+                )
+                return
+            }
+            dbReference.child("transactions").child(key).setValue(newTransaction)
         }
 
-        fun readTransaction(id: Long): MutableLiveData<Transaction?> {
-            val transaction = MutableLiveData<Transaction?>()
-            val listener = object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val newTransaction = snapshot.getValue<Transaction>()
-                    transaction.value = newTransaction
+        // TODO: Think of a way to optimize this piece of code
+        fun readAllTransactions(): MutableLiveData<List<Transaction?>> {
+            val listTransactions: MutableList<Transaction?> = mutableListOf()
+            val listener = object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val transaction = snapshot.getValue<Transaction?>()
+                    listTransactions.add(transaction)
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    val transaction = snapshot.getValue<Transaction?>()
+                    listTransactions.add(transaction)
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    val transaction = snapshot.getValue<Transaction?>()
+                    listTransactions.add(transaction)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -55,22 +78,43 @@ class FirebaseDatabase {
                 }
             }
 
-            dbReference.child("transactions").child(id.toString()).addValueEventListener(listener)
+            dbReference.child("transactions").addChildEventListener(listener)
 
-            return transaction
+            return MutableLiveData<List<Transaction?>>(listTransactions)
         }
 
-        fun writeCategory(id: Long, name: String) {
-            val newCategory = Category(id, name)
-            dbReference.child("categories").child(id.toString()).setValue(newCategory)
+        fun writeCategory(name: String) {
+            val key = dbReference.child("categories").push().key
+            if (key == null) {
+                Log.w(
+                    "Firebase Realtime Database::",
+                    "Could not get push key for new categories"
+                )
+                return
+            }
+            dbReference.child("categories").child(key).setValue(Category(name))
         }
 
-        fun readCategory(id: Long): MutableLiveData<Category?> {
-            val category = MutableLiveData<Category?>()
-            val listener = object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val newCategory = snapshot.getValue<Category>()
-                    category.value = newCategory
+        // TODO: Think of a way to optimize this piece of code
+        fun readAllCategories(): MutableLiveData<List<Category?>> {
+            val listCategories: MutableList<Category?> = mutableListOf()
+            val listener = object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val category = snapshot.getValue<Category?>()
+                    listCategories.add(category)
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    val category = snapshot.getValue<Category?>()
+                    listCategories.add(category)
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    val category = snapshot.getValue<Category?>()
+                    listCategories.add(category)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -82,9 +126,9 @@ class FirebaseDatabase {
                 }
             }
 
-            dbReference.child("categories").child(id.toString()).addValueEventListener(listener)
+            dbReference.child("categories").addChildEventListener(listener)
 
-            return category
+            return MutableLiveData<List<Category?>>(listCategories)
         }
     }
 }

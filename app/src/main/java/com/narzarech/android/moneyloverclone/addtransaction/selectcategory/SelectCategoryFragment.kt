@@ -66,8 +66,8 @@ class SelectCategoryFragment : Fragment() {
             // Click listener for item in the recycler view
 
             // Pass the category info for the current transaction
-            transactionViewModel.onCategorySubmitted(category.category)
-            Toast.makeText(context, category.category, Toast.LENGTH_SHORT).show()
+            transactionViewModel.onCategorySubmitted(category.name!!)
+            Toast.makeText(context, category.name, Toast.LENGTH_SHORT).show()
         })
 
         binding.categoryList.layoutManager = manager

@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.narzarech.android.moneyloverclone.database.TransactionInfo
+import com.narzarech.android.moneyloverclone.database.Transaction
 import com.narzarech.android.moneyloverclone.databinding.TransactionCellBinding
 
 class TransactionAdapter() :
-    ListAdapter<TransactionInfo, TransactionAdapter.TransactionViewHolder>(DiffCallBack) {
+    ListAdapter<Transaction, TransactionAdapter.TransactionViewHolder>(DiffCallBack) {
     class TransactionViewHolder private constructor(val binding: TransactionCellBinding) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -20,8 +20,8 @@ class TransactionAdapter() :
             }
         }
 
-        fun bind(item: TransactionInfo) {
-            binding.transactionCategory.text = item.category
+        fun bind(item: Transaction) {
+            //binding.transactionCategory.text = item.category
             binding.transactionAmount.text = "₫" + item.amount.toString()
             binding.transactionNote.text = item.note
             binding.transactionDate.text = item.date
@@ -30,17 +30,17 @@ class TransactionAdapter() :
         }
     }
 
-    companion object DiffCallBack : DiffUtil.ItemCallback<TransactionInfo>() {
+    companion object DiffCallBack : DiffUtil.ItemCallback<Transaction>() {
         override fun areItemsTheSame(
-            oldItem: TransactionInfo,
-            newItem: TransactionInfo
+            oldItem: Transaction,
+            newItem: Transaction
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: TransactionInfo,
-            newItem: TransactionInfo
+            oldItem: Transaction,
+            newItem: Transaction
         ): Boolean {
             return oldItem == newItem
         }

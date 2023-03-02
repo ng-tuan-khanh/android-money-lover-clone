@@ -1,7 +1,7 @@
 package com.narzarech.android.moneyloverclone.addtransaction
 
 import androidx.lifecycle.*
-import com.narzarech.android.moneyloverclone.database.CategoryInfo
+import com.narzarech.android.moneyloverclone.database.FirebaseDatabase
 import com.narzarech.android.moneyloverclone.database.TransactionDao
 import com.narzarech.android.moneyloverclone.database.TransactionInfo
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
     private val _currentNote = MutableLiveData<String>()
     private val _currentDate = MutableLiveData<String>()
 
-    private fun insertNewTransactionToDatabase() {
+    private fun insertNewTransactionToRoomDatabase() {
         val newTransaction = TransactionInfo(
             amount = _currentAmount.value!!,
             category = _currentCategory.value!!,
@@ -27,6 +27,15 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
                 transactionDao.insert(newTransaction)
             }
         }
+    }
+
+    private fun insertNewTransactionToFirebaseDatabase() {
+        val amount = _currentAmount.value!!
+        val category = _currentCategory.value!!
+        val note = _currentNote.value!!
+        val date = _currentDate.value!!
+
+        FirebaseDatabase.writeTransaction(amount, note, date)
     }
 
     fun onAmountSubmitted(amount: Double) {
@@ -47,7 +56,7 @@ class TransactionViewModel(val transactionDao: TransactionDao) : ViewModel() {
 
     fun onSaveButtonClicked() {
         if (_currentAmount.value != null && _currentCategory.value != null && _currentNote.value != null && _currentDate.value != null) {
-            insertNewTransactionToDatabase()
+            insertNewTransactionToFirebaseDatabase()
         }
     }
 

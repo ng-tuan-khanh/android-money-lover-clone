@@ -6,7 +6,7 @@
     <data>
         <variable
             name="category"
-            type="com.narzarech.android.moneyloverclone.database.CategoryInfo"/>
+            type="com.narzarech.android.moneyloverclone.database.Category"/>
 
         <variable
             name="clickListener"

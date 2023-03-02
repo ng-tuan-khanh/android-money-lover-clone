@@ -7,7 +7,7 @@
 
         <variable
             name="transaction"
-            type="com.narzarech.android.moneyloverclone.database.TransactionInfo" />
+            type="com.narzarech.android.moneyloverclone.database.Transaction" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

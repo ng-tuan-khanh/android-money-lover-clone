@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.narzarech.android.moneyloverclone.addtransaction.selectcategory.SelectCategoryViewModel
 import com.narzarech.android.moneyloverclone.database.CategoryDao
 import com.narzarech.android.moneyloverclone.database.CategoryInfo
+import com.narzarech.android.moneyloverclone.database.FirebaseDatabase
 import com.narzarech.android.moneyloverclone.database.TransactionInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,17 +20,21 @@ class AddCategoryViewModel(private val categoryDao: CategoryDao) : ViewModel() {
     }
 
     fun onNavigatedToSelectCategory(categoryText: String) {
-        insertNewCategoryToDatabase(categoryText)
+        insertNewCategoryToFirebaseDatabase(categoryText)
         _navigateToSelectCategory.value = false
     }
 
-    private fun insertNewCategoryToDatabase(categoryText: String) {
+    private fun insertNewCategoryToRoomDatabase(categoryText: String) {
         viewModelScope.launch {
             val newCategory = CategoryInfo(category = categoryText)
             withContext(Dispatchers.IO) {
                 categoryDao.insert(newCategory)
             }
         }
+    }
+
+    private fun insertNewCategoryToFirebaseDatabase(categoryText: String) {
+        FirebaseDatabase.writeCategory(categoryText)
     }
 
 

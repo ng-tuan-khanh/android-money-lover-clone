@@ -4,13 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.ktx.Firebase
+import com.narzarech.android.moneyloverclone.database.FirebaseDatabase
+import com.narzarech.android.moneyloverclone.database.Transaction
 import com.narzarech.android.moneyloverclone.database.TransactionDao
 import com.narzarech.android.moneyloverclone.database.TransactionInfo
 
 class HomeViewModel(database: TransactionDao) : ViewModel() {
 
-    private val _transactions = database.getAllTransactions()
-    val transactions: LiveData<List<TransactionInfo>>
+    private val _transactions = FirebaseDatabase.readAllTransactions()
+    val transactions: LiveData<List<Transaction?>>
         get() = _transactions
 
     class Factory(
